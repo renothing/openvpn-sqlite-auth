@@ -13,7 +13,7 @@ hash_func = getattr(hashlib, HASH_ALGORITHM)
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
-cursor.execute('SELECT * FROM users WHERE username = ?;', (os.environ['username'],))
+cursor.execute("SELECT username,password FROM users WHERE username = ? and enable=1 and until > datetime('now','localtime');", (os.environ['username'],))
 result = cursor.fetchone()
 if result is None:
     sys.exit(1)

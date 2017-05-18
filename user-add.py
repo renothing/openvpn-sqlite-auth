@@ -35,11 +35,11 @@ while not password_ok:
         print("ERROR: passwords don't match")
 
 password = hash_func(password.encode("UTF-8")).hexdigest()
-
+enable=True
 db = sqlite3.connect(DB_PATH)
 cursor = db.cursor()
 try:
-    cursor.execute("INSERT INTO users VALUES (?, ?);", (username, password))
+    cursor.execute("INSERT INTO users(username,password,enable) VALUES (?, ?, ?);", (username, password,enable))
 except sqlite3.IntegrityError:
     print("ERROR: user '%s' already exists" % username)
     sys.exit(2)

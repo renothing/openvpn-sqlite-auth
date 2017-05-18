@@ -15,9 +15,9 @@ if not os.path.exists(DB_PATH):
 db = sqlite3.connect(DB_PATH)
 cursor = db.cursor()
 
-cursor.execute("SELECT username FROM users;")
-users = cursor.fetchall()
+cursor.execute("SELECT username,enable,maxallow,until FROM users;")
+results = cursor.fetchall()
 
-print("* OpenVPN access list:")
-for user in users:
-    print("  - %s" % user)
+print("username - enabled - maxallow - expired:")
+for res in results:
+    print("%-14s %-4d %-2d %-20s" % res)

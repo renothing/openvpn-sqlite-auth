@@ -1,7 +1,7 @@
 # OpenVPN SQLite Authentication
 
 openvpn-sqlite-auth is a set of Python scripts to enable and manage OpenVPN user authentication,
-using SQLite to store credentials.
+using SQLite to store credentials.forked from https://github.com/mattoufoutu/openvpn-sqlite-auth.git
 
 ## Setup:
 
@@ -43,3 +43,10 @@ using SQLite to store credentials.
   - `./user-add.py <username>`: Add a new user to the database.
   - `./user-del.py <username>`: Remove an user from the database.
   - `./user-list.py`: List registered users.
+  - `./user-mod.py`: Modify user account.
+
+## Cron job:
+  ```
+  # m h  dom mon dow   command
+  0 */2 * * * /usr/lib/openvpn/openvpn-sqlite-auth/check_expiration.py
+  ```
