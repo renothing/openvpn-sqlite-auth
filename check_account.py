@@ -31,7 +31,7 @@ if __name__=='__main__':
         tn  = telnetlib.Telnet(host,port)
         cmd = tn.write('status\n')
         res = tn.read_until('END\r\n')
-        print res
+        print(res)
     except (RuntimeError, TypeError, NameError,EOFError):
         pass
     finally:
