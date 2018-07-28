@@ -28,13 +28,13 @@ if hash_func is None:
     sys.exit(2)
 
 username = sys.argv[1]
-menu=("change user password","change user stauts","change user expiration","Exit")
+menu=("change user password", "change user stauts", "change user expiration", "change user max concurrent", "Exit")
 
 choice = False
 while not choice:
     for i in range(len(menu)):
-        print i,menu[i]
-    choice = raw_input("\n* Please select operation: ")
+        print(i,menu[i])
+    choice = input("\n* Please select operation: ")
     if fstr(choice) in range(len(menu)):
         choice = fstr(choice)
         break
@@ -54,15 +54,20 @@ if choice == 0:
             print("ERROR: passwords don't match")
         password = hash_func(password.encode("UTF-8")).hexdigest()
 elif choice == 1:
-    enable = raw_input("please enter user status(0:disable,1:enabled):")
+    enable = input("please enter user status(0:disable,1:enabled):")
     enable = 1 if fstr(enable) else 0
         
 elif choice == 2:
-    expiration = raw_input("please enter available days for user:")
+    expiration = input("please enter available days for user:")
     if fstr(expiration):
         until = datetime.datetime.now() + datetime.timedelta(days=fstr(expiration))
     else:
         until = datetime.datetime.strptime('2055-01-01 00:00:00','%Y-%m-%d %H:%M:%S')
+
+elif choice == 3:
+    maxallow = input("please enter user max concurrent connections (small than 127):")
+    maxallow = fstr(maxallow) if fstr(maxallow) else 1
+
 else:
     sys.exit(0)
 
@@ -75,6 +80,8 @@ try:
         cursor.execute("update users set enable = ? where username = ?;", (enable, username))
     elif choice == 2:
         cursor.execute("update users set until = ? where username = ?;", (until, username))
+    elif choice == 3:
+        cursor.execute("update users set maxallow = ? where username = ?;", (maxallow, username))
 except sqlite3.IntegrityError:
     print("ERROR: something wrong with '%s'" % username)
     sys.exit(2)

@@ -18,6 +18,6 @@ cursor = db.cursor()
 cursor.execute("SELECT username,enable,maxallow,until FROM users;")
 results = cursor.fetchall()
 
-print("username - enabled - maxallow - expired:")
+print("%-16s %-10s %-10s %-20s" % ("username","enabled","maxallow","expired"))
 for res in results:
-    print("%-14s %-4d %-2d %-20s" % res)
+    print("%-16s %-10d %-10d %-20s" % res)

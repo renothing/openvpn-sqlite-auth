@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:edge
 LABEL author='renothing' tags='openvpn,openvpn-sqlite-auth' description='openvpn server with sqlite auth based on alpine'
 #set language enviroments
 ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 \
